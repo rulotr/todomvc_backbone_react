@@ -15,13 +15,21 @@ var app = app || {};
 	
 	var TodoApp = React.createClass({
 		render: function () {
+
+			var todos = this.props.todos;
+
 			var main;
 			var footer;
 			
 
-			var todoItems =(
-				<TodoItem />
+			var todoItems = todos.map(function (todo){
+				return (
+			   	<TodoItem 
+			   			todo={todo}
+			   	/>
 				);
+			},this);
+
 
 		    main =  (
 		    	<section id="main">
@@ -32,8 +40,17 @@ var app = app || {};
 				 </section>
 				 );
 
+			var activeTodoCount = todos.reduce(function (accum, todo) {
+				return todo.completed ? accum : accum + 1;
+			}, 0);
+
+			var completedCount = todos.length - activeTodoCount;
+
             footer = (
-            	<TodoFooter />
+            	<TodoFooter 
+            		count = {activeTodoCount}
+            		completedCount = {completedCount}
+            	/>
             	);
 
 
@@ -50,8 +67,21 @@ var app = app || {};
 		}
 	});
 
+// Lista de tareas
+var tareas =[];
+
+var tareas = [
+  {title: 'Tarea1', completed: true},
+  {title: 'Tarea2', completed: false},
+  {title: 'Tarea3', completed: true},
+  {title: 'Tarea4', completed: false},
+];
+
+
 	React.render(
-		<TodoApp />,
+		<TodoApp todos={tareas} />,
 		document.getElementById('todoapp')
 	);
 })();
+
+

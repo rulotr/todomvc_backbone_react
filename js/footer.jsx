@@ -13,17 +13,19 @@ var app = app || {};
 
 	app.TodoFooter = React.createClass({
 		render: function () {
-			var activeTodoWord = 'items';
+			var activeTodoWord = this.props.count === 1 ? 'item' : 'items';
 			var clearButton = null;
 
-			clearButton = (
-					<button	id="clear-completed"> Clear completed </button>				
-			);
+			if (this.props.completedCount > 0) {
+				clearButton = (
+						<button	id="clear-completed"> Clear completed </button>				
+				);
+			}
 
 			return (
 				<footer id="footer">
 					<span id="todo-count">
-						<strong>0 </strong> {activeTodoWord} left
+						<strong>{this.props.count} </strong> {activeTodoWord} left
 					</span>
 					<ul id="filters">
 						<li>
