@@ -13,32 +13,19 @@ var app = app || {};
 
 	app.TodoFooter = React.createClass({
 		render: function () {
-			var activeTodoWord = 'items';
-			var clearButton = null;
-
-			clearButton = (
-					<button	id="clear-completed"> Clear completed </button>				
-			);
-
 			return (
 				<footer id="footer">
 					<span id="todo-count">
-						<strong>0 </strong> {activeTodoWord} left
+						<strong>1 </strong> item left
 					</span>
 					<ul id="filters">
-						<li>
-							<a	href="#/">All</a>
-						</li>
+						<li><a	href="#/">All</a></li>
 						{' '}
-						<li>
-							<a	href="#/active">Active</a>
-						</li>
+						<li><a	href="#/active">Active</a></li>
 						{' '}
-						<li>
-							<a	href="#/completed">	Completed</a>
-						</li>
+						<li><a	href="#/completed">	Completed</a></li>
 					</ul>
-					{clearButton}
+					<button	id="clear-completed"> Clear completed </button>
 			   	</footer>
 			);		
 		}

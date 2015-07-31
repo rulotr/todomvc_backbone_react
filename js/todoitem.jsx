@@ -17,7 +17,7 @@ var app = app || {};
 				<li>
 					<div className="view">
 						<input	className="toggle" type="checkbox" />
-						<label>	Titulo 	</label>
+						<label>	Tarea 1 </label>
 						<button className="destroy"  />
 					</div>
 					<input ref="editField"	className="edit" />
