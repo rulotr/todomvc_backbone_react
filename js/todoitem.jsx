@@ -14,10 +14,10 @@ var app = app || {};
 		
 		render: function () {
 			return (
-				<li>
+				<li className={classNames({completed: this.props.todo.completed})}	>
 					<div className="view">
-						<input	className="toggle" type="checkbox" />
-						<label>	Tarea 1 </label>
+						<input	className="toggle" type="checkbox" checked={this.props.todo.completed} />
+						<label>	{this.props.todo.title} </label>
 						<button className="destroy"  />
 					</div>
 					<input ref="editField"	className="edit" />

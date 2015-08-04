@@ -13,10 +13,11 @@ var app = app || {};
 
 	app.TodoFooter = React.createClass({
 		render: function () {
+				var activeTodoWord = this.props.count === 1 ? 'item' : 'items';
 			return (
 				<footer id="footer">
 					<span id="todo-count">
-						<strong>1 </strong> item left
+						<strong> {this.props.count} </strong> {activeTodoWord} left
 					</span>
 					<ul id="filters">
 						<li><a	href="#/">All</a></li>

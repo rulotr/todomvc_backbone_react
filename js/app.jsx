@@ -15,10 +15,23 @@ var app = app || {};
 
 	var TodoApp = React.createClass({
 		render: function () {
-			var todoItems =(<TodoItem />);
+			var todos = this.props.todos;
+			var todoItems = todos.map(function (todo){
+				         return(<TodoItem todo={todo} />);},this);
 
-			var footer = (<TodoFooter />)
+			var activeTodoCount = todos.reduce(function (accum, todo) {
+				return todo.completed ? accum : accum + 1;
+			}, 0);
 
+			var completedCount = todos.length - activeTodoCount;
+		
+		
+
+			var footer = (<TodoFooter
+							count = {activeTodoCount} 
+	               			completedCount = {completedCount}
+				 />);
+			
 			var main =  (
 		    		<section id="main">
 						<input	id="toggle-all"	type="checkbox"	/>
@@ -27,6 +40,9 @@ var app = app || {};
 						</ul>
 				 	</section>
 				 );
+
+
+
 
 			return (				
 				<div>
@@ -40,9 +56,20 @@ var app = app || {};
 			);
 		}
 	});
+    
+	// Lista de tareas
+	var tareas =[];
+
+	var tareas = [
+	  {title: 'Tarea1', completed: true},
+	  {title: 'Tarea2', completed: false},	  
+	  {title: 'Tarea3', completed: true},
+	  {title: 'Tarea4', completed: false},
+	  {title: 'Tarea5', completed: false},	  
+	];
 
 	React.render(
-		<TodoApp />,
+		<TodoApp todos={tareas} />,
 		document.getElementById('todoapp')
 	);
 })();
