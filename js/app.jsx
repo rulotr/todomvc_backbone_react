@@ -14,13 +14,21 @@ var app = app || {};
 	var TodoFooter = app.TodoFooter;
 
 	var TodoApp = React.createClass({
+		componentWillMount: function(){ // Se lanza antes de que se renderice el componente
+    		Backbone.React.Component.mixin.on(this, {collections: { myCollection:  app.todos }});
+		},
+		componentWillUnmount: function(){ // Se lanza antes de que el componente se elimine
+			Backbone.React.Component.mixin.off(this);
+		},
+
+
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
-				         return(<TodoItem todo={todo} />);},this);
+				         return(<TodoItem todo={todo} key={todo.get('id')} />);},this);
 
 			var activeTodoCount = todos.reduce(function (accum, todo) {
-				return todo.completed ? accum : accum + 1;
+				return todo.get('completed') ? accum : accum + 1;
 			}, 0);
 
 			var completedCount = todos.length - activeTodoCount;
@@ -57,19 +65,21 @@ var app = app || {};
 		}
 	});
     
-	// Lista de tareas
-	var tareas =[];
-
-	var tareas = [
-	  {title: 'Tarea1', completed: true},
-	  {title: 'Tarea2', completed: false},	  
-	  {title: 'Tarea3', completed: true},
-	  {title: 'Tarea4', completed: false},
-	  {title: 'Tarea5', completed: false},	  
-	];
-
+   
+   app.todos.add({id:1,title: 'Tarea1', completed: true});
+   app.todos.add({id:2,title: 'Tarea2', completed: false});
+   app.todos.add({id:3,title: 'Tarea3', completed: true});
+   app.todos.add({id:4,title: 'Tarea4', completed: false});
+   app.todos.add({id:5,title: 'Tarea5', completed: true});
+   
 	React.render(
-		<TodoApp todos={tareas} />,
+		<TodoApp todos={ app.todos} />,
 		document.getElementById('todoapp')
 	);
 })();
+
+// ** eliminar
+// app.todos.remove(app.todos.get(2))
+// ** Ordenar 
+//app.todos.comparator = "completed"
+//app.todos.sort()
