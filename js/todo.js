@@ -16,6 +16,11 @@ var app = app || {};
 			title: '',
 			completed: false
 		},
+		// Toggle the `completed` state of this todo item.
+		toggle: function () {
+			console.log("seleccionado");
+			this.set({completed: !this.get('completed')});
+		}
 
 	});
 })();

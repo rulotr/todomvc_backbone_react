@@ -20,12 +20,21 @@ var app = app || {};
 		componentWillUnmount: function(){ // Se lanza antes de que el componente se elimine
 			Backbone.React.Component.mixin.off(this);
 		},
-
-
+		edit: function (todo, callback) {
+			// refer to todoItem.jsx `handleEdit` for the reason behind the callback
+			this.setState({editing: todo.get('id')}, callback);
+		},
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
-				         return(<TodoItem todo={todo} key={todo.get('id')} />);},this);
+				         return(
+				         	<TodoItem 
+				         	    key={todo.get('id')} 
+				         	    todo={todo} 
+				         	    onToggle = {todo.toggle.bind(todo)}
+				         	    onEdit={this.edit.bind(this, todo)}
+				         	    editing={this.state.editing === todo.get('id')}	
+				         	    />);},this);
 
 			var activeTodoCount = todos.reduce(function (accum, todo) {
 				return todo.get('completed') ? accum : accum + 1;
@@ -49,9 +58,6 @@ var app = app || {};
 				 	</section>
 				 );
 
-
-
-
 			return (				
 				<div>
 					<header id="header">
@@ -63,8 +69,7 @@ var app = app || {};
 				</div>
 			);
 		}
-	});
-    
+	}); 
    
    app.todos.add({id:1,title: 'Tarea1', completed: true});
    app.todos.add({id:2,title: 'Tarea2', completed: false});
