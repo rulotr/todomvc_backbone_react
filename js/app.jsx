@@ -19,10 +19,23 @@ var app = app || {};
 		},
 		componentWillUnmount: function(){ // Se lanza antes de que el componente se elimine
 			Backbone.React.Component.mixin.off(this);
+		},	
+		getInitialState: function () {
+			return {editing: null};
 		},
 		edit: function (todo, callback) {
 			// refer to todoItem.jsx `handleEdit` for the reason behind the callback
-			this.setState({editing: todo.get('id')}, callback);
+			this.setState({editing: todo.get('id')});
+		},
+		save: function (todoToSave, text) {
+			//this.props.model.save(todoToSave, text);
+			//this.props.todo.set({title: val})
+			todoToSave.set({title: text})
+			console.log("el modelo es " + todoToSave.get('title'))
+			this.setState({editing: null});
+		},
+		cancel: function () {
+			this.setState({editing: null});
 		},
 		render: function () {
 			var todos = this.props.todos;
@@ -31,9 +44,11 @@ var app = app || {};
 				         	<TodoItem 
 				         	    key={todo.get('id')} 
 				         	    todo={todo} 
-				         	    onToggle = {todo.toggle.bind(todo)}
+				         	    onToggle = {todo.toggle.bind(todo)} //con bind le indicamos quien sera el this para esa funcion
 				         	    onEdit={this.edit.bind(this, todo)}
+				         	    onCancel={this.cancel}
 				         	    editing={this.state.editing === todo.get('id')}	
+				         	    onSave={this.save.bind(this, todo)}
 				         	    />);},this);
 
 			var activeTodoCount = todos.reduce(function (accum, todo) {
