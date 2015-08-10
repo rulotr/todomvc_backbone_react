@@ -20,12 +20,23 @@ var app = app || {};
 		componentWillUnmount: function(){ // Se lanza antes de que el componente se elimine
 			Backbone.React.Component.mixin.off(this);
 		},
-
-
+		getInitialState: function () {
+			return {editing: null};
+		},
+		edit: function (todo, callback) {
+			// refer to todoItem.jsx `handleEdit` for the reason behind the callback
+			this.setState({editing: todo.get('id')});
+		},
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
-				         return(<TodoItem todo={todo} key={todo.get('id')} />);},this);
+				         return(
+				         	<TodoItem 
+				         	      todo={todo} 
+				         	      key={todo.get('id')} 
+				         	      onEdit={this.edit.bind(this, todo)}
+				         	      editing={this.state.editing === todo.get('id')}
+				         	 />);},this);
 
 			var activeTodoCount = todos.reduce(function (accum, todo) {
 				return todo.get('completed') ? accum : accum + 1;
