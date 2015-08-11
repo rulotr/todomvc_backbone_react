@@ -26,6 +26,9 @@ var app = app || {};
 		save: function (todo, text) {
 			todo.set({title: text})
 			this.setState({editing: null});
+		},		
+		cancel: function () {
+			this.setState({editing: null});
 		},
 		edit: function (todo) {
 			this.setState({editing: todo.get('id')});
@@ -40,6 +43,7 @@ var app = app || {};
 				         	      onEdit={this.edit.bind(this, todo)}
 				         	      editing={this.state.editing === todo.get('id')}
 				         	      onSave={this.save.bind(this, todo)}
+				         	      onCancel={this.cancel}
 				         	 />);},this);
 
 			var activeTodoCount = todos.reduce(function (accum, todo) {

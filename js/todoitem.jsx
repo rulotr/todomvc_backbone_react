@@ -11,6 +11,7 @@ var app = app || {};
 (function () {
 	'use strict';
 
+	var ESCAPE_KEY = 27;
 	var ENTER_KEY = 13;
 
 	app.TodoItem = React.createClass({
@@ -32,6 +33,11 @@ var app = app || {};
 		handleKeyDown: function (event) {
 			if (event.which === ENTER_KEY) {
 				this.handleSubmit();
+			} else if(event.which === ESCAPE_KEY){
+				//this.setState({editText: this.props.todo.get('title')});
+				//console.log(this.props.todo.get('title'));
+				console.log(this.state.editText);
+				this.props.onCancel();
 			}
 		},
 		// Como el input es de solo lectura esta es la forma de cambiar su valor
