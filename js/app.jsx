@@ -23,8 +23,11 @@ var app = app || {};
 		getInitialState: function () {
 			return {editing: null};
 		},
-		edit: function (todo, callback) {
-			// refer to todoItem.jsx `handleEdit` for the reason behind the callback
+		save: function (todo, text) {
+			todo.set({title: text})
+			this.setState({editing: null});
+		},
+		edit: function (todo) {
 			this.setState({editing: todo.get('id')});
 		},
 		render: function () {
@@ -36,6 +39,7 @@ var app = app || {};
 				         	      key={todo.get('id')} 
 				         	      onEdit={this.edit.bind(this, todo)}
 				         	      editing={this.state.editing === todo.get('id')}
+				         	      onSave={this.save.bind(this, todo)}
 				         	 />);},this);
 
 			var activeTodoCount = todos.reduce(function (accum, todo) {

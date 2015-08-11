@@ -10,15 +10,37 @@ var app = app || {};
 
 (function () {
 	'use strict';
+
+	var ENTER_KEY = 13;
+
 	app.TodoItem = React.createClass({
 		getInitialState: function () {
-			return {editText: 0};
+			return {editText:  this.props.todo.get('title')};
+		},		
+		handleSubmit: function () {
+			var val = this.state.editText.trim();
+			if (val) {
+				this.props.onSave(val);
+			} 
+			return false;
 		},
 		handleEdit: function () {
+			// Le informa al componente padre que hay cambio de celda a editar
 			this.props.onEdit();
 			this.setState({editText:  this.props.todo.get('title') });
 		},
-		render: function () {
+		handleKeyDown: function (event) {
+			if (event.which === ENTER_KEY) {
+				this.handleSubmit();
+			}
+		},
+		// Como el input es de solo lectura esta es la forma de cambiar su valor
+		handleChange: function (event) {
+			this.setState({editText: event.target.value});
+		},
+		// Cuando se le asigna value=valor el componente sera de solo lectura
+		// para poder escribir en el se necesita agregar el evento onChange y asignarle un manejador
+  	  render: function () {
 			return (
 				<li className={classNames({
 					completed: this.props.todo.get('completed'),
@@ -29,7 +51,13 @@ var app = app || {};
 						<label  onDoubleClick={this.handleEdit}>	{this.props.todo.get('title')}  </label>
 						<button className="destroy"  />
 					</div>
-					<input ref="editField"	className="edit" value={this.state.editText}/>
+					<input 
+						ref="editField"	
+						className="edit" 
+						value={this.state.editText}
+						onChange={this.handleChange}
+						onKeyDown={this.handleKeyDown}
+					/>
 				</li>
 			);
 		}
