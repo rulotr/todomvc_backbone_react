@@ -30,8 +30,9 @@ var app = app || {};
 		cancel: function () {
 			this.setState({editing: null});
 		},
-		edit: function (todo) {
-			this.setState({editing: todo.get('id')});
+		// Cuando temine de ejecutar setState se ejecutara la funcion que se le paso
+		edit: function (todo,callback) {
+			this.setState({editing: todo.get('id')},callback);
 		},
 		render: function () {
 			var todos = this.props.todos;
