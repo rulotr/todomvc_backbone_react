@@ -16,6 +16,9 @@ var app = app || {};
 			title: '',
 			completed: false
 		},
+		toggle: function () {
+			this.set({completed: !this.get('completed')});
+		}
 
 	});
 })();

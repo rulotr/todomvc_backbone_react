@@ -39,8 +39,9 @@ var app = app || {};
 			var todoItems = todos.map(function (todo){
 				         return(
 				         	<TodoItem 
-				         	      todo={todo} 
 				         	      key={todo.get('id')} 
+				         	      todo={todo} 
+				         	      onToggle={todo.toggle.bind(todo)}
 				         	      onEdit={this.edit.bind(this, todo)}
 				         	      editing={this.state.editing === todo.get('id')}
 				         	      onSave={this.save.bind(this, todo)}

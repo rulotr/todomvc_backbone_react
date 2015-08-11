@@ -63,7 +63,12 @@ var app = app || {};
 					editing: this.props.editing
 					})}	>
 					<div className="view">
-						<input	className="toggle" type="checkbox" checked={this.props.todo.get('completed')} />
+						<input	
+							className="toggle" 
+							type="checkbox" 
+							checked={this.props.todo.get('completed')} 
+ 							onChange={this.props.onToggle}
+						/>
 						<label  onDoubleClick={this.handleEdit}>{this.props.todo.get('title')} </label>
 						<button className="destroy"  />
 					</div>
