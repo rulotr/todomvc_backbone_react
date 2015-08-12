@@ -80,6 +80,13 @@ var app = app || {};
 		delete: function(todo){
 			app.todos.remove(todo);
 		},
+		toggleAll: function (event) {
+			var checked = event.target.checked;
+			app.todos.forEach(function (todo) {
+				todo.set('completed', checked);
+			});
+		},
+
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
@@ -116,7 +123,11 @@ var app = app || {};
 			
 			var main =  (
 		    		<section id="main">
-						<input	id="toggle-all"	type="checkbox"	/>
+						<input	
+							id="toggle-all"	
+							type="checkbox"	
+							onChange={this.toggleAll}
+						/>
 						<ul id="todo-list">
 					 		{todoItems}
 						</ul>
