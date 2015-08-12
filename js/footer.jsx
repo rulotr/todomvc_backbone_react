@@ -12,6 +12,10 @@ var app = app || {};
 	'use strict';
 
 	app.TodoFooter = React.createClass({
+		// mixins: [ReactRenderVisualizer],
+		// getInitialState: function () {
+		// 		return {propiedad:  0};
+		// },		
 		render: function () {
 				var activeTodoWord = this.props.count === 1 ? 'item' : 'items';
 			return (

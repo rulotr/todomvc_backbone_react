@@ -15,6 +15,7 @@ var app = app || {};
 	var ENTER_KEY = 13;
 
 	app.TodoItem = React.createClass({
+		//mixins: [ReactRenderVisualizer],
 		getInitialState: function () {
 			return {editText:  this.props.todo.get('title')};
 		},		

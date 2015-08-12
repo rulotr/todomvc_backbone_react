@@ -14,16 +14,39 @@ var app = app || {};
 	var ESCAPE_KEY = 27;
 	var ENTER_KEY = 13;
 
+	app.ALL_TODOS = 'all';
+	app.ACTIVE_TODOS = 'active';
+	app.COMPLETED_TODOS = 'completed';
+	
 	var TodoItem = app.TodoItem;
 	var TodoFooter = app.TodoFooter;
-
-	var TodoApp = React.createClass({
+    
+	var TodoApp = React.createClass({		 
+		//mixins: [ReactRenderVisualizer],
 		componentWillMount: function(){ // Se lanza antes de que se renderice el componente
     		Backbone.React.Component.mixin.on(this, {collections: { myCollection:  app.todos }});
 		},
 		componentWillUnmount: function(){ // Se lanza antes de que el componente se elimine
 			Backbone.React.Component.mixin.off(this);
 		},
+		componentDidMount: function () { //Se lanza despues de que se renderiza el componente
+			var Router = Backbone.Router.extend({
+				routes: {
+					'': 'all',
+					'active': 'active',
+					'completed': 'completed'
+				},
+				all: this.setState.bind(this, {nowShowing: app.ALL_TODOS},function(){console.log("menu all")}),
+				active: this.setState.bind(this, {nowShowing: app.ACTIVE_TODOS},function(){console.log("menu active")}),
+				completed: this.setState.bind(this, {nowShowing: app.COMPLETED_TODOS},function(){console.log("menu completed")})
+			});
+
+			new Router();
+			Backbone.history.start();
+            //index.html#/completed
+			//this.props.todos.fetch();
+		},
+
 		getInitialState: function () {
 			return {editing: null};
 		},
@@ -60,6 +83,12 @@ var app = app || {};
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
+						 if(this.state.nowShowing===app.ACTIVE_TODOS && todo.get('completed')===true){
+						 	return ;
+						 }
+						 if(this.state.nowShowing===app.COMPLETED_TODOS && todo.get('completed')===false){
+						 	return ;
+						 }
 				         return(
 				         	<TodoItem 
 				         	      key={todo.get('id')} 
