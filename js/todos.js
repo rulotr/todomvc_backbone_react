@@ -16,6 +16,9 @@ var app = app || {};
 		nextOrder: function () {
 			return this.length ? this.last().get('id') + 1 : 1;
 		},
+		completed: function () {
+			return this.where({completed: true});
+		},
 	});
 
 	

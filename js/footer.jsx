@@ -30,7 +30,11 @@ var app = app || {};
 						{' '}
 						<li><a	href="#/completed">	Completed</a></li>
 					</ul>
-					<button	id="clear-completed"> Clear completed </button>
+					<button	
+						id="clear-completed"
+						onClick={this.props.onClearCompleted}>
+					    Clear completed 
+					</button>
 			   	</footer>
 			);		
 		}

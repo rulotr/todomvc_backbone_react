@@ -86,7 +86,11 @@ var app = app || {};
 				todo.set('completed', checked);
 			});
 		},
-
+		clearCompleted: function () {
+			app.todos.completed().forEach(function (todo) {
+				app.todos.remove(todo);
+			});
+		},
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
@@ -119,6 +123,7 @@ var app = app || {};
 			var footer = (<TodoFooter
 							count = {activeTodoCount} 
 	               			completedCount = {completedCount}
+	               			onClearCompleted={this.clearCompleted}
 				 />);
 			
 			var main =  (
