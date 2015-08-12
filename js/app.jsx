@@ -10,6 +10,10 @@ var app = app || {};
 
 (function () {
 	'use strict';
+
+	var ESCAPE_KEY = 27;
+	var ENTER_KEY = 13;
+
 	var TodoItem = app.TodoItem;
 	var TodoFooter = app.TodoFooter;
 
@@ -22,6 +26,22 @@ var app = app || {};
 		},
 		getInitialState: function () {
 			return {editing: null};
+		},
+		handleNewTodoKeyDown: function (event) {
+			if (event.which !== ENTER_KEY) {
+				return;
+			}
+
+			var val = this.refs.newField.getDOMNode().value.trim();
+			console.log(val)
+			if (val) {
+				var siguiente= app.todos.nextOrder();
+				console.log(siguiente);
+				app.todos.add({id:siguiente,title: val, completed: false});								
+				this.refs.newField.getDOMNode().value = '';
+			}
+
+		//	event.preventDefault();
 		},
 		save: function (todo, text) {
 			todo.set({title: text})
@@ -77,7 +97,13 @@ var app = app || {};
 				<div>
 					<header id="header">
 						<h1>todos</h1>	
-						<input	ref="newField"	id="new-todo" placeholder="What needs to be done?"/>		
+						<input	
+							ref="newField"								
+							id="new-todo"
+							placeholder="What needs to be done?"
+							autoFocus={true}
+							onKeyDown={this.handleNewTodoKeyDown}
+						/>		
 					</header>
 					{main}
 					{footer}	

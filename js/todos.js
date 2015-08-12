@@ -12,8 +12,13 @@ var app = app || {};
 	var Todos = Backbone.Collection.extend({
 		// Reference to this collection's model.
 		model: app.Todo,
+
+		nextOrder: function () {
+			return this.length ? this.last().get('id') + 1 : 1;
+		},
 	});
 
+	
 	// Create our global collection of **Todos**.
 	app.todos = new Todos();
 })();
