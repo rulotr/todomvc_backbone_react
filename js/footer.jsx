@@ -16,7 +16,20 @@ var app = app || {};
 		// getInitialState: function () {
 		// 		return {propiedad:  0};
 		// },		
+		
+
 		render: function () {
+			var clearButton = null;
+			
+			if (this.props.completedCount > 0) {
+				clearButton = (
+					<button
+						id="clear-completed"
+						onClick={this.props.onClearCompleted}>
+						Clear completed
+					</button>
+				);
+			}
 				var activeTodoWord = this.props.count === 1 ? 'item' : 'items';
 			return (
 				<footer id="footer">
@@ -30,11 +43,7 @@ var app = app || {};
 						{' '}
 						<li><a	href="#/completed">	Completed</a></li>
 					</ul>
-					<button	
-						id="clear-completed"
-						onClick={this.props.onClearCompleted}>
-					    Clear completed 
-					</button>
+					{clearButton}
 			   	</footer>
 			);		
 		}

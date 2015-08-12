@@ -10,6 +10,21 @@ var app = app || {};
 	// The collection of todos is backed by *localStorage* instead of a remote
 	// server.
 	var Todos = Backbone.Collection.extend({
+		sort_key: 'id', // default sort key
+
+		comparator: function(a,b) {
+			//Para numeros
+			return b - a;
+			//Para cadenas
+			//if (a === b) return 0;
+  			//return a < b ? -1 : 1;
+		},
+	
+		sortByField: function(fieldName) {
+			this.sort_key = fieldName;
+			this.sort();
+		},
+
 		// Reference to this collection's model.
 		model: app.Todo,
 
