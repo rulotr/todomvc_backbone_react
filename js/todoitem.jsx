@@ -20,6 +20,7 @@ var app = app || {};
 		},		
 		handleSubmit: function (event) {
 			var val = this.state.editText.trim();
+			console.log(val)
 			if (val) {
 				this.props.onSave(val);
 				console.log("se guarda");
@@ -70,7 +71,7 @@ var app = app || {};
  							onChange={this.props.onToggle}
 						/>
 						<label  onDoubleClick={this.handleEdit}>{this.props.todo.get('title')} </label>
-						<button className="destroy"  />
+						<button className="destroy"   onClick={this.props.onDestroy}/>
 					</div>
 					<input 
 						ref="editField"	

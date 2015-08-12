@@ -54,6 +54,9 @@ var app = app || {};
 		edit: function (todo,callback) {
 			this.setState({editing: todo.get('id')},callback);
 		},
+		delete: function(todo){
+			app.todos.remove(todo);
+		},
 		render: function () {
 			var todos = this.props.todos;
 			var todoItems = todos.map(function (todo){
@@ -62,6 +65,7 @@ var app = app || {};
 				         	      key={todo.get('id')} 
 				         	      todo={todo} 
 				         	      onToggle={todo.toggle.bind(todo)}
+				         	      onDestroy={this.delete.bind(this,todo)}
 				         	      onEdit={this.edit.bind(this, todo)}
 				         	      editing={this.state.editing === todo.get('id')}
 				         	      onSave={this.save.bind(this, todo)}
