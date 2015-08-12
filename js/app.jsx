@@ -127,6 +127,7 @@ var app = app || {};
 							id="toggle-all"	
 							type="checkbox"	
 							onChange={this.toggleAll}
+							checked={activeTodoCount === 0}
 						/>
 						<ul id="todo-list">
 					 		{todoItems}
